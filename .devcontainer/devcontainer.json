@@ -1,0 +1,17 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.128.0/containers/python-3
+{
+	"name": "xv6-env",
+	// "image": "wtakuo/xv6-env",
+
+	"build": {
+		"dockerfile": "../Dockerfile.xv6",
+		"context": "..",
+	},
+	
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode"
+	"mounts": [
+	]
+}
