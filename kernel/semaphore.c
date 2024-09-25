@@ -8,10 +8,10 @@
 #include "defs.h"
 #include "stdbool.h"
 
-#define MAX_SEM      500
-#define ERROR_CODE   0
-#define SUCCESS_CODE 1
-#define CLOSED_SEM   3
+#define MAX_SEM            500
+#define ERROR_CODE         0
+#define SUCCESS_CODE       1
+#define CLOSED_SEM_VALUE   -1
 
 // Todas estas syscalls, realmente, estan modificando 
 // una entrada en la SEM_ARRAY, es importante que, como
@@ -38,6 +38,7 @@ sem_init_array(void)
   for (int i = 0; i < MAX_SEM; i++){
     sem_array[i].value = -1;
     sem_array[i].is_active = false;
+    initlock(&(sem_array[i].lock), "mysem");
   }
   return SUCCESS_CODE;
 }
@@ -46,7 +47,7 @@ uint64
 sem_open(int sem, int value)
 {
   // Adquiero el lock del semaforo sem
-  acquire(&sem_array[sem].lock);
+  acquire(&(sem_array[sem].lock));
 
   // ----------- ZONA CRITICA -----------
   
@@ -62,11 +63,12 @@ sem_open(int sem, int value)
 
     // printf("Se ejecuta semopen\n");
     sem_array[sem].value = value;
+    sem_array[sem].is_active = true;
 
     // -------- FIN ZONA CRITICA -----------
 
     // Devuelvo el lock del semaforo sem
-    release(&sem_array[sem].lock);
+    release(&(sem_array[sem].lock));
   }
   return SUCCESS_CODE;
 }
@@ -75,7 +77,7 @@ uint64
 sem_close(int sem)
 {
   // Adquiero el lock del semaforo sem
-  acquire(&sem_array[sem].lock);
+  acquire(&(sem_array[sem].lock));
 
   // ----------- ZONA CRITICA -----------
 
@@ -85,12 +87,13 @@ sem_close(int sem)
   }
 
   // printf("Se ejecuta semclose\n");
-  sem_array[sem].value = CLOSED_SEM;
+  sem_array[sem].value = CLOSED_SEM_VALUE;
+  sem_array[sem].is_active = false;
 
   // -------- FIN ZONA CRITICA -----------
   
   // Devuelvo el lock del semaforo sem
-  release(&sem_array[sem].lock);
+  release(&(sem_array[sem].lock));
   return SUCCESS_CODE;
 }
 
@@ -98,7 +101,7 @@ uint64
 sem_up(int sem)
 {
   // Adquiero el lock del semaforo sem
-  acquire(&sem_array[sem].lock);
+  acquire(&(sem_array[sem].lock));
 
   // ----------- ZONA CRITICA -----------
 
@@ -109,12 +112,12 @@ sem_up(int sem)
 
   // printf("Se ejecuta semup\n");
   sem_array[sem].value++;
-  wakeup(&sem_array[sem]);
+  wakeup(&(sem_array[sem]));
 
   // -------- FIN ZONA CRITICA -----------
   
   // Devuelvo el lock del semaforo sem
-  release(&sem_array[sem].lock);
+  release(&(sem_array[sem].lock));
   return SUCCESS_CODE;
 
 }
@@ -123,7 +126,7 @@ uint64
 sem_down(int sem)
 {
   // Adquiero el lock del semaforo sem
-  acquire(&sem_array[sem].lock);
+  acquire(&(sem_array[sem].lock));
 
   // ----------- ZONA CRITICA -----------
 
@@ -134,14 +137,14 @@ sem_down(int sem)
 
   // printf("Se ejecuta semdown\n");
   while (sem_array[sem].value <= 0) {
-        sleep(&sem_array[sem], &sem_array[sem].lock); 
+        sleep(&(sem_array[sem]), &(sem_array[sem].lock)); 
   }
   sem_array[sem].value--;
 
   // -------- FIN ZONA CRITICA -----------
 
   // Devuelvo el lock del semaforo sem
-  release(&sem_array[sem].lock);
+  release(&(sem_array[sem].lock));
   return SUCCESS_CODE;
 }
 
@@ -149,16 +152,28 @@ uint64
 sem_find_free_channel(void)
 {
   bool index_found = false;
-  int index = -1;
+  int index = 100000;
   for (int i = 0; i < MAX_SEM && !index_found; i++){
     if (sem_array[i].is_active){
         // skip
     }
     if (!sem_array[i].is_active){
+
+      // Adquiero el lock del semaforo sem
+      // acquire(&sem_array[i].lock);
+
+      // ----------- ZONA CRITICA -----------
+
       sem_open(i,0);
       sem_array[i].is_active = true;
       index = i;
       index_found = true;
+
+
+      // -------- FIN ZONA CRITICA -----------
+      
+      // Devuelvo el lock del semaforo sem
+      // release(&sem_array[i].lock);
     }
   }
 

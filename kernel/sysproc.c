@@ -131,7 +131,7 @@ uint64 sys_sem_find_free_channel(void) {
   return sem_find_free_channel();
 }
 
-uint64 sys_sem_init_array(void) {
+int sys_sem_init_array(void) {
   return sem_init_array();
 }
 
