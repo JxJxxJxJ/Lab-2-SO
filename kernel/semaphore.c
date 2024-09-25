@@ -34,4 +34,3 @@ sem_down(int sem)
   printf("Se ejecuta semdown\n");
   return sem;
 }
-
