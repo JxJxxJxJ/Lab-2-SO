@@ -107,6 +107,13 @@ int             either_copyout(int user_dst, uint64 dst, void *src, uint64 len);
 int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
 
+// PASO 2: No tengo idea por que las agrega aca
+// semaphore.c
+uint64          sem_open(int sem, int value);
+uint64          sem_close(int sem);
+uint64          sem_up(int sem);
+uint64          sem_down(int sem);
+
 // swtch.S
 void            swtch(struct context*, struct context*);
 
