@@ -8,7 +8,7 @@
 #include "defs.h"
 #include "stdbool.h"
 
-#define MAX_SEM      3
+#define MAX_SEM      500
 #define ERROR_CODE   0
 #define SUCCESS_CODE 1
 #define CLOSED_SEM   3
@@ -164,3 +164,4 @@ sem_find_free_channel(void)
 
   return index_found ? index : ERROR_CODE;
 }
+

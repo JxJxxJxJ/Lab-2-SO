@@ -2,6 +2,8 @@
 #include "user/user.h"
 #include "kernel/semaphore.h"
 
+#define ERROR_CODE 0
+
 void ping(int rondas, int sem_number) {
     for (int i = 0; i < rondas; i++) {
         sem_down(sem_number); 
@@ -19,11 +21,21 @@ void pong(int rondas, int sem_number) {
 }
 
 int main(int argc, char *argv[]) {
+    if (argc == 1){
+      printf("ERROR: Se necesita un argumento para el numero de rondas.\n");
+      return ERROR_CODE;
+    }
+
+    int rondas = atoi(argv[1]);
+    if (rondas < 0){
+      printf("ERROR: Se necesita un argumento >= 0 para el numero de rondas\n");
+      return ERROR_CODE;
+    }
+
     sem_init_array();
     int sem_number = sem_find_free_channel();
     sem_open(sem_number, 1); 
 
-    int rondas = atoi(argv[1]);
 
     int rc = fork();
     if (rc == 0) {
