@@ -27,16 +27,16 @@ int main(int argc, char *argv[]) {
     }
 
     int rondas = atoi(argv[1]);
-    if (rondas < 0){
+
+    if (rondas <= 0){
       printf("ERROR: Se necesita un argumento >= 0 para el numero de rondas\n");
       return ERROR_CODE;
     }
 
-    sem_init_array();
     int sem_number = sem_find_free_channel();
     sem_open(sem_number, 1); 
 
-
+ 
     int rc = fork();
     if (rc == 0) {
         pong(rondas,sem_number); 

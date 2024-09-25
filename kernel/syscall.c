@@ -107,8 +107,8 @@ extern uint64 sys_sem_open(void);
 extern uint64 sys_sem_close(void);
 extern uint64 sys_sem_up(void);
 extern uint64 sys_sem_down(void);
-extern uint64 sys_sem_find_free_channel(void);
 extern uint64 sys_sem_init_array(void);
+extern uint64 sys_sem_find_free_channel(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -140,8 +140,8 @@ static uint64 (*syscalls[])(void) = {
 [SYS_sem_close]              sys_sem_close,
 [SYS_sem_up]                 sys_sem_up,
 [SYS_sem_down]               sys_sem_down,
-[SYS_sem_find_free_channel]  sys_sem_find_free_channel,
 [SYS_sem_init_array]         sys_sem_init_array,
+[SYS_sem_find_free_channel]  sys_sem_find_free_channel,
 };
 
 void
