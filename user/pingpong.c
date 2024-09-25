@@ -1,15 +1,14 @@
+#include "kernel/types.h"
+#include "user/user.h"
 
-// Abre y/o inicializa el semáforo “sem” con un valor arbitrario “value”.
-int sem_open(int sem, int value);
+int 
+main (void)
+{
+  printf("Se ejecuta pingpong.c \n");
+  sem_open(0, 1);  
+  sem_close(0);  
+  sem_up(0);  
+  sem_down(0);  
 
-// Libera el semáforo “sem”.
-int sem_close(int sem);
-
-// Incrementa el semáforo ”sem” desbloqueando los procesos
-// cuando su valor es 0.
-int sem_up(int sem);
-
-// Decrementa el semáforo ”sem”
-// bloqueando los procesos cuando su valor es 0.
-// El valor del semaforo nunca puede ser menor a 0
-int sem_down(int sem);
+  return 0;
+}

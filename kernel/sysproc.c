@@ -89,3 +89,40 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// PASO 4: La systemcall sys_sem_[open,close,up,down] lo unico que hace
+// es ejecutar sem_[open,close,up,down] con los parametros correctos
+// uso argint para pasarle los argumentos a la syscall, todas las de arriba lo hacen
+// no se por que
+// por que no puedo 
+// int sem = 0
+// int value = 1 
+// ?
+uint64 sys_sem_open(void) {
+  int sem, value;
+  argint(0, &sem);
+  argint(1, &value);
+  printf("Ejecutando systemcall (sys_sem_open)\n");
+  return sem_open(sem, value);
+}
+
+uint64 sys_sem_close(void) {
+  int sem;
+  argint(0, &sem);
+  printf("Ejecutando systemcall (sys_sem_close)\n");
+  return sem_close(sem);
+}
+
+uint64 sys_sem_up(void) {
+  int sem;
+  argint(0, &sem);
+  printf("Ejecutando systemcall (sys_sem_up)\n");
+  return sem_up(sem);
+}
+
+uint64 sys_sem_down(void) {
+  int sem;
+  argint(0, &sem);
+  printf("Ejecutando systemcall (sys_sem_down)\n");
+  return sem_down(sem);
+}

@@ -1,24 +1,36 @@
 #include "semaphore.h"
-#define CHANNEL_SIZE 5
-int arreglo_de_semaforos[CHANNEL_SIZE];
+#include "types.h"
+#include "param.h"
+#include "memlayout.h"
+#include "riscv.h"
+#include "spinlock.h"
+#include "proc.h"
+#include "defs.h"
 
-// Un sem tiene valores >= 0
+uint64
+sem_open(int sem, int value)
+{
+  printf("Se ejecuta semopen\n");
+  return sem;
+}
 
-struct semaphore_s {
-  int value;
-};
+uint64
+sem_close(int sem)
+{
+  printf("Se ejecuta semclose\n");
+  return sem;
+}
 
-// Abre y/o inicializa el semáforo “sem” con un valor arbitrario “value”.
-int sem_open(semaphore sem, int value);
+uint64
+sem_up(int sem)
+{
+  printf("Se ejecuta semup\n");
+  return sem;
+}
 
-// Libera el semáforo “sem”.
-int sem_close(semaphore sem);
-
-// Incrementa el semáforo ”sem” desbloqueando los procesos
-// cuando su valor es 0.
-int sem_up(semaphore sem);
-
-// Decrementa el semáforo ”sem”
-// bloqueando los procesos cuando su valor es 0.
-// El valor del semaforo nunca puede ser menor a 0
-int sem_down(semaphore sem);
+uint64
+sem_down(int sem)
+{
+  printf("Se ejecuta semdown\n");
+  return sem;
+}
