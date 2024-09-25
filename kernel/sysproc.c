@@ -102,27 +102,36 @@ uint64 sys_sem_open(void) {
   int sem, value;
   argint(0, &sem);
   argint(1, &value);
-  printf("Ejecutando systemcall (sys_sem_open)\n");
+  // printf("Ejecutando systemcall (sys_sem_open)\n");
   return sem_open(sem, value);
 }
 
 uint64 sys_sem_close(void) {
   int sem;
   argint(0, &sem);
-  printf("Ejecutando systemcall (sys_sem_close)\n");
+  // printf("Ejecutando systemcall (sys_sem_close)\n");
   return sem_close(sem);
 }
 
 uint64 sys_sem_up(void) {
   int sem;
   argint(0, &sem);
-  printf("Ejecutando systemcall (sys_sem_up)\n");
+  // printf("Ejecutando systemcall (sys_sem_up)\n");
   return sem_up(sem);
 }
 
 uint64 sys_sem_down(void) {
   int sem;
   argint(0, &sem);
-  printf("Ejecutando systemcall (sys_sem_down)\n");
+  // printf("Ejecutando systemcall (sys_sem_down)\n");
   return sem_down(sem);
 }
+
+uint64 sys_sem_find_free_channel(void) {
+  return sem_find_free_channel();
+}
+
+uint64 sys_sem_init_array(void) {
+  return sem_init_array();
+}
+
