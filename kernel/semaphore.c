@@ -38,7 +38,6 @@ sem_init_array(void)
   for (int i = 0; i < MAX_SEM; i++){
     sem_array[i].value = -1;
     sem_array[i].is_active = false;
-    initlock(&(sem_array[i].lock), "mysem");
   }
   return SUCCESS_CODE;
 }
