@@ -8,18 +8,6 @@
 #include "defs.h"
 #include "stdbool.h"
 
-/*
-    Cantidad máxima de semáforos
-    disponibles.
-*/
-#define MAX_SEM            500
-
-/*
-    Optamos por tomar al valor
-    -1 para indicar que el semáforo
-    está cerrado.
-*/
-#define CLOSED_SEM_VALUE    -1
 
 /*
     Todas estas syscalls realmente están modificando
@@ -71,7 +59,7 @@ sem_init_array(void)
 /*
     Busca el primer semáforo inactivo en el arreglo de
     semáforos `sem_array`. Al hallarlo, abre ese semáforo
-    e inicializa su valor en 0.
+    e inicializa su valor en value.
 */
 uint64
 sem_find_free_channel_and_set(int value)
@@ -115,13 +103,10 @@ sem_open(int sem, int value)
     error = true;
   }
   if (0 <= sem && sem < MAX_SEM){ // Si estoy dentro de los indices
-    if(value < 0){                   // Pero le doy un valor negativo
+    if(value < 0  || sem_array[sem].is_active){  // Pero le doy un valor negativo o el semaforo esta activado
       error = true;
     }
-    if(sem_array[sem].is_active){    // Pero el semaforo esta activado
-      error = true;
-    }
-    if (!error){                     // Y todo esta bien
+    if (!error){                                 // Si todo esta bien
       sem_array[sem].value = value;
       sem_array[sem].is_active = true;
     }
@@ -146,7 +131,6 @@ sem_close(int sem)
 
   // ------------------ ZONA CRITICA ------------------
   if (sem < 0 || sem >= MAX_SEM){ // Si estoy fuera de los indices
-    printf("ERROR: Indice fuera del arreglo de semaforos. (%d) debe estar entre 0 y (%d)\n", sem, MAX_SEM);
     error = true;
   }
   if (0 <= sem && sem < MAX_SEM){ // Si estoy dentro de los indices
@@ -181,12 +165,15 @@ sem_up(int sem)
   bool error = false;
 
   // ------------------ ZONA CRITICA ------------------
-  if (sem < 0 || sem >= MAX_SEM){
+  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){ // Si sem no es un indice valido o Si el semaforo no esta activo
     error = true;
   }
   if (!error){
+    bool sem_was_zero = 0 == sem_array[sem].value;
     sem_array[sem].value++;
-    wakeup(&(sem_array[sem]));
+    if(sem_was_zero){
+      wakeup(&(sem_array[sem]));
+    }
   }
   // ---------------- FIN ZONA CRITICA ----------------
 
@@ -209,11 +196,12 @@ sem_down(int sem)
   bool error = false;
 
   // ------------------ ZONA CRITICA ------------------
-  if (sem < 0 || sem >= MAX_SEM){
+  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){ // Si sem no es un indice valido o si el semaforo no esta activo
     error = true;
   }
   if (!error){
-    while (sem_array[sem].value <= 0) {
+    bool sem_was_zero = 0 == sem_array[sem].value;
+    if (sem_was_zero) {
       sleep(&(sem_array[sem]), &(sem_array[sem].lock));
     }
     sem_array[sem].value--;
