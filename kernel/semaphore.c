@@ -12,14 +12,14 @@
     Cantidad máxima de semáforos
     disponibles.
 */
-#define MAX_SEM            500  
+#define MAX_SEM            500
 
 /*
     Optamos por tomar al valor
     -1 para indicar que el semáforo
     está cerrado.
 */
-#define CLOSED_SEM_VALUE    -1  
+#define CLOSED_SEM_VALUE    -1
 
 /*
     Todas estas syscalls realmente están modificando
@@ -74,7 +74,7 @@ sem_init_array(void)
     e inicializa su valor en 0.
 */
 uint64
-sem_find_free_channel_and_set(int value) 
+sem_find_free_channel_and_set(int value)
 {
   // Adquiero el lock especializado
   acquire(&sem_array[MAX_SEM].lock);
