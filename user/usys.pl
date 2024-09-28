@@ -41,5 +41,5 @@ entry("sem_open");
 entry("sem_close");
 entry("sem_up");
 entry("sem_down");
-entry("sem_find_free_channel");
+entry("sem_find_free_channel_and_set");
 entry("sem_init_array");

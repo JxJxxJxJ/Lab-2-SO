@@ -29,7 +29,7 @@ uint64 sem_close(int sem);
 uint64 sem_up(int sem);
 uint64 sem_down(int sem);
 uint64 sem_init_array();
-uint64 sem_find_free_channel();
+uint64 sem_find_free_channel_and_set(int value);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -127,8 +127,10 @@ uint64 sys_sem_down(void) {
   return sem_down(sem);
 }
 
-uint64 sys_sem_find_free_channel(void) {
-  return sem_find_free_channel();
+uint64 sys_sem_find_free_channel_and_set(void) {
+  int value;
+  argint(0, &value);
+  return sem_find_free_channel_and_set(value);
 }
 
 int sys_sem_init_array(void) {

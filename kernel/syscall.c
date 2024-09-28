@@ -108,40 +108,40 @@ extern uint64 sys_sem_close(void);
 extern uint64 sys_sem_up(void);
 extern uint64 sys_sem_down(void);
 extern uint64 sys_sem_init_array(void);
-extern uint64 sys_sem_find_free_channel(void);
+extern uint64 sys_sem_find_free_channel_and_set(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
 static uint64 (*syscalls[])(void) = {
-[SYS_fork]                   sys_fork,
-[SYS_exit]                   sys_exit,
-[SYS_wait]                   sys_wait,
-[SYS_pipe]                   sys_pipe,
-[SYS_read]                   sys_read,
-[SYS_kill]                   sys_kill,
-[SYS_exec]                   sys_exec,
-[SYS_fstat]                  sys_fstat,
-[SYS_chdir]                  sys_chdir,
-[SYS_dup]                    sys_dup,
-[SYS_getpid]                 sys_getpid,
-[SYS_sbrk]                   sys_sbrk,
-[SYS_sleep]                  sys_sleep,
-[SYS_uptime]                 sys_uptime,
-[SYS_open]                   sys_open,
-[SYS_write]                  sys_write,
-[SYS_mknod]                  sys_mknod,
-[SYS_unlink]                 sys_unlink,
-[SYS_link]                   sys_link,
-[SYS_mkdir]                  sys_mkdir,
-[SYS_close]                  sys_close,
+[SYS_fork]                           sys_fork,
+[SYS_exit]                           sys_exit,
+[SYS_wait]                           sys_wait,
+[SYS_pipe]                           sys_pipe,
+[SYS_read]                           sys_read,
+[SYS_kill]                           sys_kill,
+[SYS_exec]                           sys_exec,
+[SYS_fstat]                          sys_fstat,
+[SYS_chdir]                          sys_chdir,
+[SYS_dup]                            sys_dup,
+[SYS_getpid]                         sys_getpid,
+[SYS_sbrk]                           sys_sbrk,
+[SYS_sleep]                          sys_sleep,
+[SYS_uptime]                         sys_uptime,
+[SYS_open]                           sys_open,
+[SYS_write]                          sys_write,
+[SYS_mknod]                          sys_mknod,
+[SYS_unlink]                         sys_unlink,
+[SYS_link]                           sys_link,
+[SYS_mkdir]                          sys_mkdir,
+[SYS_close]                          sys_close,
 // PASO 6: Agregar la syscall a la tabla de syscalls, 
 // esto mapea la syscall number con la syscall handling function 
-[SYS_sem_open]               sys_sem_open,
-[SYS_sem_close]              sys_sem_close,
-[SYS_sem_up]                 sys_sem_up,
-[SYS_sem_down]               sys_sem_down,
-[SYS_sem_init_array]         sys_sem_init_array,
-[SYS_sem_find_free_channel]  sys_sem_find_free_channel,
+[SYS_sem_open]                       sys_sem_open,
+[SYS_sem_close]                      sys_sem_close,
+[SYS_sem_up]                         sys_sem_up,
+[SYS_sem_down]                       sys_sem_down,
+[SYS_sem_init_array]                 sys_sem_init_array,
+[SYS_sem_find_free_channel_and_set]  sys_sem_find_free_channel_and_set,
 };
 
 void
