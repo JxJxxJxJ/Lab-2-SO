@@ -1,74 +1,74 @@
 
 xv6 kernel is booting
 
-hart 1 starting
 hart 2 starting
+hart 1 starting
 init: starting sh
 $ pingpong 10 & ; pingpong 10 & ; pingpong 20 ; echo DONE
-PinPgin
-g
-Pi n       g 
-         P o n gP
-on gP
-  in Pgi
-n g 
-              P o n g 
-Po P i n g 
-ngP o n g 
+Ping
+Pin g 
+   P     i n gP
+on   g 
+   P i        P o nPgo
+ngnP
+ingP
+ing 
+  g     
+              P o n  P o n g 
+Pgo
+ng
+PPiinngg
+
+ P i n                P oPnogn
+gg
  
-P i n g P
-in  P o gn 
- g  
-   P i      P o n gP
-onnPgi
-ngPgi
+   PPiinngg
+  
+          P o n g 
+  P i n  g 
+P o n g    
+  PPio n n g 
+Pog
+ n Pg i n g 
 
-n g 
-                  P o nP o gn
-g P
-iP n gi n g 
-Po
-  n g 
-   P i n g    
-       P o nPgo
-n Pgi
- n g 
- P  i   P n go
-ng  
-   P i n gP
-o n g 
-  P i n gP
- o n g  
-      P i n g 
-     PPoonngg
+ P  i n g  
+  P o   n g 
+ PP o nig 
+n gP i n g
 
-   PP i n g 
-  iP onngg
-
- Pi                P o nPgo
-nngP
-ignPgi
-n
-g    
-                 P      P o n gP
-onPognign
+ P o n g 
+   P i n      g 
+ P  o n g 
+    P   P oPnogi
+ngn
+Pig 
+  nPgi
+ n   g 
+              P o n g P o
+ng P
+i Pnign
 g
-
-PiPi n n g 
-g
-               P   o nP ogn
-g 
-   P i Pngo
+  P               o n gP
+  oPnign
+gP
+oP i n g n g 
+  
+P i nPgo
 ng 
-  P i ng 
-        P o n g 
-  PiPngo
-n g 
-  P  i n g
-  P on g 
-  P i  ng  
-P on g  
-      Pong
+  P i n g 
+                       PPoonngg
+
+PPPoinngi
+ngg
+
+ P     i n g        P o n g 
+P
+oPin g 
+  n  g 
+     P o  n g 
+   Pong
+Ping
+          Pong
 Ping
           Pong
 Ping
@@ -86,4 +86,4 @@ Ping
 Ping
           Pong
 DONE
-$ qemu-system-riscv64: terminating on signal 15 from pid 128934 (make)
+$ qemu-system-riscv64: terminating on signal 15 from pid 131573 (make)

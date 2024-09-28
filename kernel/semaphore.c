@@ -155,6 +155,9 @@ sem_close(int sem)
     }
   }
   if (!error){                        // Y todo esta bien
+    wakeup(&sem_array[sem]); // Para que los procesos esperando a sem
+                             // tengan la oportunidad de hacer algo y
+                             // no se queden colgados
     sem_array[sem].value = CLOSED_SEM_VALUE;
     sem_array[sem].is_active = false;
   }
