@@ -8,7 +8,6 @@
 #include "defs.h"
 #include "stdbool.h"
 
-
 /*
     Todas estas syscalls realmente están modificando
     una entrada en la SEM_ARRAY. Es importante que, como
@@ -82,7 +81,7 @@ sem_find_free_channel_and_set(int value)
   }
   // -------- FIN ZONA CRITICA -----------
   
-  // Devuelvo el lock del semaforo sem
+  // Devuelvo el lock especializado
   release(&sem_array[MAX_SEM].lock);
   return index;
 }
@@ -134,14 +133,14 @@ sem_close(int sem)
     error = true;
   }
   if (0 <= sem && sem < MAX_SEM){ // Si estoy dentro de los indices
-    if(!sem_array[sem].is_active){    // Pero el semaforo no esta activado
+    if(!sem_array[sem].is_active){               // Pero el semaforo no esta activado
       error = true;
     }
   }
-  if (!error){                        // Y todo esta bien
-    wakeup(&sem_array[sem]); // Para que los procesos esperando a sem
-                             // tengan la oportunidad de hacer algo y
-                             // no se queden colgados
+  if (!error){                                   // Y todo esta bien
+    wakeup(&sem_array[sem]); // <-- Para que los procesos esperando a
+                             // sem tengan la oportunidad de hacer algo
+                             // y no se queden colgados.
     sem_array[sem].value = CLOSED_SEM_VALUE;
     sem_array[sem].is_active = false;
   }
@@ -165,7 +164,8 @@ sem_up(int sem)
   bool error = false;
 
   // ------------------ ZONA CRITICA ------------------
-  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){ // Si sem no es un indice valido o Si el semaforo no esta activo
+  // Si sem no es un indice valido o si el semaforo no esta activo.
+  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){
     error = true;
   }
   if (!error){
@@ -196,11 +196,12 @@ sem_down(int sem)
   bool error = false;
 
   // ------------------ ZONA CRITICA ------------------
-  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){ // Si sem no es un indice valido o si el semaforo no esta activo
+  // Si sem no es un indice valido o si el semaforo no esta activo.
+  if (sem < 0 || sem >= MAX_SEM || !sem_array[sem].is_active){
     error = true;
   }
   if (!error){
-    bool sem_was_zero = 0 == sem_array[sem].value;
+    bool sem_was_zero = sem_array[sem].value == 0;
     if (sem_was_zero) {
       sleep(&(sem_array[sem]), &(sem_array[sem].lock));
     }
