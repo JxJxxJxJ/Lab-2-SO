@@ -169,7 +169,7 @@ sem_up(int sem)
     error = true;
   }
   if (!error){
-    bool sem_was_zero = 0 == sem_array[sem].value;
+    bool sem_was_zero = sem_array[sem].value == 0;
     sem_array[sem].value++;
     if(sem_was_zero){
       wakeup(&(sem_array[sem]));
