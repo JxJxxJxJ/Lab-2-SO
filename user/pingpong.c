@@ -1,9 +1,31 @@
 #include "kernel/types.h"
 #include "user/user.h"
 #include "kernel/semaphore.h"
+#include "stdbool.h"
 
 #define ERROR_CODE 0
 #define SUCCESS_CODE 1
+
+// #define FUN false  // Si quiero pasar los tests
+#define FUN true   // Si quiero pasarla bien
+
+/*
+    Para FUN. Printea ronda actual, hace un pequeño delay
+    y borra la terminal para pasar al siguiente frame.
+ */
+void
+print_round_wait_and_erase(int i) 
+{
+    printf("Ronda: %d\n",i+1); // i+1 porque cuento desde la ronda 1
+    
+    int ticks_to_wait = 2;
+    int start_time = uptime();
+    // Loopeo hasta que hayan pasado ticks_to_wait ticks desde start_time
+    while ((uptime() - start_time) < ticks_to_wait) { 
+        // skip
+    }
+    printf("\033[H\033[J"); // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797#erase-functions
+}
 
 /*
     Si sem_ping es positivo imprime "ping", luego libera
@@ -14,9 +36,28 @@ void
 ping(int rounds, int sem_ping, int sem_pong)
 {
     for (int i = 0; i < rounds; i++) {
-        sem_down(sem_ping);
-        printf("Ping\n");
-        sem_up(sem_pong);
+        if (!FUN) { // Pasa todos los tests
+            sem_down(sem_ping);
+            printf("Ping\n");
+            sem_up(sem_pong);
+        }
+        if (FUN) { // No pasa los tests por tener caracteres raros :(
+            sem_down(sem_ping);
+            printf("\033[H\033[J"); // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797#erase-functions
+            printf("Ping\t🏓\n");
+            print_round_wait_and_erase(i);
+            printf("    \t🏓\t⚫\t\t\t\t\t🏓\t\n");
+            print_round_wait_and_erase(i);
+            printf("    \t🏓\t\t⚫\t\t\t\t🏓\t\n");
+            print_round_wait_and_erase(i);
+            printf("    \t🏓\t\t\t⚫\t\t\t🏓\n");
+            print_round_wait_and_erase(i);
+            printf("    \t🏓\t\t\t\t⚫\t\t🏓\n");
+            print_round_wait_and_erase(i);
+            printf("    \t🏓\t\t\t\t\t⚫\t🏓\n");
+            print_round_wait_and_erase(i);
+            sem_up(sem_pong);
+        }
     }
 }
 
@@ -29,9 +70,33 @@ void
 pong(int rounds, int sem_ping, int sem_pong)
 {
     for (int i = 0; i < rounds; i++) {
-        sem_down(sem_pong);
-        printf("          Pong\n");
-        sem_up(sem_ping);
+        if (!FUN) { // Pasa todos los tests
+            sem_down(sem_pong);
+            printf("\t\t\t\t\tPong\n");
+            sem_up(sem_ping);
+        }
+        if (FUN) { // No pasa los tests por tener caracteres raros :(
+            sem_down(sem_pong);
+            if (i < rounds - 1) { // Ronda intermedia
+                printf("    \t🏓\t\t\t\t\t\t🏓\tPong\n");
+                print_round_wait_and_erase(i);
+                printf("    \t🏓\t\t\t\t\t⚫\t🏓\n");
+                print_round_wait_and_erase(i);
+                printf("    \t🏓\t\t\t\t⚫\t\t🏓\n");
+                print_round_wait_and_erase(i);
+                printf("    \t🏓\t\t\t⚫\t\t\t🏓\n");
+                print_round_wait_and_erase(i);
+                printf("    \t🏓\t\t⚫\t\t\t\t🏓\n");
+                print_round_wait_and_erase(i);
+                printf("    \t🏓\t⚫\t\t\t\t\t🏓\n");
+                print_round_wait_and_erase(i);
+            }
+            if (i == rounds - 1) { // Ultima ronda
+                printf("    \t🏓\t\t\t\t\t\t🏓\tPong\n");
+                printf("🎉\n");
+            }
+            sem_up(sem_ping);
+        }
     }
 }
 

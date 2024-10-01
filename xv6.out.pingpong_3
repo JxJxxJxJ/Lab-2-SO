@@ -4,7 +4,7 @@ xv6 kernel is booting
 hart 1 starting
 hart 2 starting
 init: starting sh
-$ pingpong 10; echo DONE
+$ pingpong 3
 [H[JPing	🏓
 Ronda: 1
 [H[J    	🏓	⚫					🏓	
@@ -66,13 +66,5 @@ Ronda: 3
 [H[J    	🏓					⚫	🏓
 Ronda: 3
 [H[J    	🏓						🏓	Pong
-Ronda: 3
-[H[J    	🏓					⚫	🏓
-Ronda: 3
-[H[J    	🏓				⚫		🏓
-Ronda: 3
-[H[J    	🏓			⚫			🏓
-Ronda: 3
-[H[J    	🏓		⚫				🏓
-Ronda: 3
-qemu-system-riscv64: terminating on signal 2
+🎉
+$ qemu-system-riscv64: terminating on signal 15 from pid 370536 (make)
