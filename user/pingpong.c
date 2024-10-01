@@ -6,8 +6,8 @@
 #define ERROR_CODE 0
 #define SUCCESS_CODE 1
 
-// #define FUN false  // Si quiero pasar los tests
-#define FUN true   // Si quiero pasarla bien
+#define FUN false  // Si quiero pasar los tests
+// #define FUN true   // Si quiero pasarla bien
 
 /*
     Para FUN. Printea ronda actual, hace un pequeño delay
