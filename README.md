@@ -20,6 +20,7 @@ En este proyecto de laboratorio se busca escarbar más profundo dentro del siste
 ## **Dependencias**
 Para poder compilar y ejecutar el proyecto es necesario tener instalado el emulador QEMU, el cual nos permite trabajar amenamente con XV6.
  - QEMU (Ubuntu): `sudo apt-get install qemu-system-riscv64 gcc-riscv64-linux-gnu`
+ - Fuente monoespaciada con soporte de caracteres unicode: [`JetBrains Mono`](https://www.jetbrains.com/es-es/lp/mono/)
 
 ## **Compilación y ejecución**
 Para compilar el proyecto, simplemente ejecutar:
@@ -49,7 +50,7 @@ Ambos usan semáforos, solo cambian unos `printf()`.
 [![asciicast](https://asciinema.org/a/678305.svg)](https://asciinema.org/a/678305)
 
 ## **Documentación empleada para el desarrollo del proyecto**
-- Remzi H. Arpaci-Dusseau y Andrea C. Arpaci-Dusseau (2023).[*Operating Systems: Three Easy Pieces*](https://pages.cs.wisc.edu/~remzi/OSTEP/). Los capítulos sobre concurrencia fueron de gran ayuda para el desarrollo del laboratorio, en particular el apartado sobre semáforos (capítulo 31).
+- Remzi H. Arpaci-Dusseau y Andrea C. Arpaci-Dusseau (2023). [*Operating Systems: Three Easy Pieces*](https://pages.cs.wisc.edu/~remzi/OSTEP/). Los capítulos sobre concurrencia fueron de gran ayuda para el desarrollo del laboratorio, en particular el apartado sobre semáforos (capítulo 31).
 - Russ Cox, Frans Kaashoek y Robert Morris (2022). [*xv6: a simple, Unix-like teaching operating system*](https://pdos.csail.mit.edu/6.828/2022/xv6/book-riscv-rev3.pdf).
 - Allan B. Downey (2016). [*The Little Book of Semaphores*](https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf).
 - [*xv6-explained*](https://github.com/YehudaShapira/xv6-explained). Repositorio GitHub en donde se hacen explicaciones del funcionamiento de XV6.
