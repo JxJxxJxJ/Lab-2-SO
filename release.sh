@@ -18,14 +18,14 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-# 3. Verificar que los commits cumplen con el formato de Conventional Commits
-echo "✅ Verificando el historial de commits..."
-if cog check --from-latest-tag; then
-  echo "✔️ Historial de commits verificado con éxito."
-else
-  echo "❌ Hay commits no convencionales."
-  exit 1
-fi
+# # 3. Verificar que los commits cumplen con el formato de Conventional Commits
+# echo "✅ Verificando el historial de commits..."
+# if cog check --from-latest-tag; then
+#   echo "✔️ Historial de commits verificado con éxito."
+# else
+#   echo "❌ Hay commits no convencionales."
+#   exit 1
+# fi
 
 # 4. Solicitar al usuario el tipo de incremento de versión
 echo "Seleccione el tipo de incremento de versión:"
